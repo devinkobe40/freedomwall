@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <!-- <button class="btn btn-outline-primary" type="button" name="button">Create Thread</button> -->
+    <a class="btn btn-dark" href="thread/create_thread">Create Thread</a>
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Date Created</th>
+          </tr>
+        </thead>
+     {% if thread_list %}
+        {% for threads in thread_list %}
+        <div class="space">
+            <tbody>
+              <tr>
+                <th scope="row">{{threads.id}}</th>
+                <td>
+                  <a href="{% url 'discussion:detail' threads.id %}">
+                    {{threads.title}}
+                  </a>
+                </td>
+                <td>{{threads.created_at}}</td>
+              </tr>
+            </tbody>
+        </div>
+            <!-- <strong>{{threads.title}}</strong><br> -->
+        {% endfor %}
+      </table>
+     {% else %}
+
+    <h2>No degenerates have posted yet.</h2>
+
+     {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<p>
+  <h1>Think Before You Click.</h1>
+  <small>Once you submit this thread you may never be able to change it or edit.</small>
+  <form action="" method="post" id="upload_form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-outline-primary" type="submit" name="button">Submit</button>
+    <button class="btn btn-outline-primary" type="submit" onclick="window.location.href='{% url 'discussion:all' %}';return false;">Back</button>
+    {% comment %} <input type="submit" value="Submit">
+    <input type="submit" value="Cancel" onclick="window.location.href='{% url 'discussion:all' %}';return false;"> {% endcomment %}
+  </form>
+</p>
+<!-- https://stackoverflow.com/questions/2472422/django-file-upload-size-limit -->
+<script>
+$("#upload_form").submit(function() {
+  console.log('Checking file size');
+  if (window.File && window.FileReader && window.FileList && window.Blob) {
+      var file = $('#id_{{ form.upload_field_name }}')[0].files[0];
+      if (file && file.size > {{ form.max_upload_limit }} ) {
+          alert("File " + file.name + " of type " + file.type + " must be < {{ form.max_upload_limit_text }}");
+      return false;
+    }
+  }
+});
+</script>
+{% endblock %}

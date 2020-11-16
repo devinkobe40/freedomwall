@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        {% if thread %}
+        <div class="d-flex justify-content-center">
+            <h1 class="display-1">
+              {{thread.title}}<br>
+            </h1>
+        </div>
+
+        <small>Posted: {{thread.created_at|naturaltime}}</small><br>
+        <div class="space d-flex justify-content-center">
+
+            <p class="lead">
+
+                {{thread.text}}
+              </p>
+        </div>
+        {% endif %}
+        <div class="space">
+              {% if comment %}
+              <div class="space">
+                <p class="lead">
+                  {{comment.text}}
+                </p>
+              </div>
+              {% else %}
+              <h2>No comments</h2>
+              {% endif %}
+        </div>
+
+        <div class="space">
+
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{comment_form|crispy}}
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+          </form>
+        </div>
+
+    </div>
+{% endblock %}
