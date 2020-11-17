@@ -73,7 +73,7 @@ class CommentForm(forms.ModelForm):
 
     # Convert uploaded File object to a picture
     def save(self, commit=True):
-        instance = super(CreateForm, self).save(commit=False)
+        instance = super(CommentForm, self).save(commit=False)
 
         # We only need to adjust picture if it is a freshly uploaded file
         f = instance.picture   # Make a copy
